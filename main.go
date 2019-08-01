@@ -11,8 +11,9 @@ import (
 )
 
 var (
-	start string
-	end   string
+	start  string
+	end    string
+	iterm2 bool
 )
 
 func main() {
@@ -30,17 +31,25 @@ func main() {
 	io.Copy(&buf, conn)
 
 	_, ok := os.LookupEnv("TERM")
-	if ok {
-		term := os.Getenv("TERM")
-		if strings.HasPrefix(term, "screen") {
-			start = "\033Ptmux;\033\033]"
-			end = "\a\033\\"
-		} else {
-			start = "\033]"
-			end = "\a"
-		}
-	} else {
+	if !ok {
 		os.Exit(1)
+	}
+
+	_, ok = os.LookupEnv("TERM_PROGRAM")
+	if ok {
+		if strings.HasPrefix(os.Getenv("TERM_PROGRAM"), "iTerm") {
+			iterm2 = true
+		}
+	}
+
+	term := os.Getenv("TERM")
+
+	if !iterm2 && strings.HasPrefix(term, "screen") {
+		start = "\033Ptmux;\033\033]"
+		end = "\a\033\\"
+	} else {
+		start = "\033]"
+		end = "\a"
 	}
 
 	fmt.Printf("%s%s%s\n", start, &buf, end)
