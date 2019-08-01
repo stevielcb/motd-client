@@ -14,6 +14,7 @@ var (
 	start  string
 	end    string
 	iterm2 bool
+	sshClient bool
 )
 
 func main() {
@@ -42,9 +43,14 @@ func main() {
 		}
 	}
 
+	_, ok = os.LookupEnv("SSH_CLIENT")
+	if ok {
+		sshClient = true
+	}
+
 	term := os.Getenv("TERM")
 
-	if !iterm2 && strings.HasPrefix(term, "screen") {
+	if !iterm2 && !sshClient && strings.HasPrefix(term, "screen") {
 		start = "\033Ptmux;\033\033]"
 		end = "\a\033\\"
 	} else {
