@@ -11,9 +11,9 @@ import (
 )
 
 var (
-	start  string
-	end    string
-	iterm2 bool
+	start     string
+	end       string
+	iterm2    bool
 	sshClient bool
 )
 
@@ -36,9 +36,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	_, ok = os.LookupEnv("TERM_PROGRAM")
+	term_program, ok := os.LookupEnv("TERM_PROGRAM")
 	if ok {
-		if strings.HasPrefix(os.Getenv("TERM_PROGRAM"), "iTerm") {
+		if strings.HasPrefix(term_program, "iTerm") || strings.HasPrefix(term_program, "vscode") {
 			iterm2 = true
 		}
 	}
