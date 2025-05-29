@@ -1,3 +1,5 @@
+// Package main implements a client for fetching and displaying Message of the Day (MOTD)
+// from a TCP server. It handles various terminal environments and formatting requirements.
 package main
 
 import (
@@ -10,13 +12,19 @@ import (
 	"time"
 )
 
+// Global variables for terminal-specific formatting
 var (
-	start     string
-	end       string
-	iterm2    bool
-	sshClient bool
+	start     string // ANSI escape sequence start
+	end       string // ANSI escape sequence end
+	iterm2    bool   // Flag for iTerm2/VSCode terminal
+	sshClient bool   // Flag for SSH client
 )
 
+// main is the entry point of the application. It:
+// 1. Connects to the MOTD server
+// 2. Fetches the message
+// 3. Determines the terminal environment
+// 4. Formats and displays the message with appropriate terminal escape sequences
 func main() {
 	conn, err := net.DialTimeout(
 		"tcp",
