@@ -20,7 +20,7 @@ var (
 func main() {
 	conn, err := net.DialTimeout(
 		"tcp",
-		fmt.Sprintf("%s:%d", c.Host, c.Port),
+		net.JoinHostPort(c.Host, fmt.Sprintf("%d", c.Port)),
 		time.Duration(c.TimeoutMs)*time.Millisecond,
 	)
 	if err != nil {
