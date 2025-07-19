@@ -61,14 +61,35 @@ MOTD_HOST=example.com MOTD_PORT=8080 MOTD_LOG_LEVEL=debug ./motd-client
 
 ## Project Structure
 
+The project follows a clean architecture pattern with proper separation of concerns:
+
 ```plaintext
 motd-client/
-├── main.go         # Main application entry point
-├── config.go       # Configuration management
-├── go.mod          # Go module file
-├── go.sum          # Dependency checksums
-└── README.md       # This file
+├── main.go                    # Main application entry point
+├── go.mod                     # Go module file
+├── go.sum                     # Dependency checksums
+├── README.md                  # This file
+└── internal/                  # Internal packages
+    ├── app/                   # Application orchestration
+    │   └── app.go            # Main application logic
+    ├── config/               # Configuration management
+    │   └── config.go         # Configuration loading and validation
+    ├── logger/               # Logging setup
+    │   └── logger.go         # Structured logging configuration
+    ├── network/              # Network communication
+    │   └── client.go         # TCP client for server communication
+    └── terminal/             # Terminal environment handling
+        ├── terminal.go       # Terminal detection and formatting
+        └── terminal_test.go  # Unit tests for terminal package
 ```
+
+### Architecture Benefits
+
+- **Separation of Concerns**: Each package has a single responsibility
+- **Testability**: Components can be tested in isolation
+- **Maintainability**: Clear boundaries between different functionalities
+- **Reusability**: Packages can be reused in other contexts
+- **Dependency Injection**: Dependencies are explicitly passed rather than using globals
 
 ## Dependencies
 
