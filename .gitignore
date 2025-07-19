@@ -1,2 +1,4 @@
 vendor*
 motd-client
+dist/
+coverage.txt
