@@ -74,6 +74,14 @@ func TestApp_Run_WithServer(t *testing.T) {
 	}
 
 	app := New(cfg)
+
+	// Mock the terminal detector to avoid TERM environment issues in CI
+	mockEnv := &terminal.Environment{
+		StartSeq: "\033]",
+		EndSeq:   "\a",
+	}
+	app.detector = &mockDetector{env: mockEnv, err: nil}
+
 	err = app.Run()
 
 	if err != nil {
