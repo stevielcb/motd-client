@@ -2,10 +2,21 @@
 package terminal
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strings"
 )
+
+// Error definitions
+var (
+	ErrTerminalNotSet = errors.New("TERM environment variable not set")
+)
+
+// DetectorInterface defines the interface for terminal detection
+type DetectorInterface interface {
+	Detect() (*Environment, error)
+}
 
 // Environment represents the detected terminal environment.
 type Environment struct {
@@ -29,7 +40,7 @@ func (d *Detector) Detect() (*Environment, error) {
 	// Check if TERM environment variable exists
 	_, ok := os.LookupEnv("TERM")
 	if !ok {
-		return nil, fmt.Errorf("TERM environment variable not set")
+		return nil, ErrTerminalNotSet
 	}
 
 	env := &Environment{}

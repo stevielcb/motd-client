@@ -8,6 +8,9 @@ A Go client for interacting with Message of the Day (MOTD) services.
   - [Usage](#usage)
   - [Configuration](#configuration)
   - [Project Structure](#project-structure)
+    - [Architecture Benefits](#architecture-benefits)
+  - [Testing](#testing)
+    - [Test Coverage](#test-coverage)
   - [Dependencies](#dependencies)
   - [License](#license)
   - [Author](#author)
@@ -71,13 +74,17 @@ motd-client/
 ├── README.md                  # This file
 └── internal/                  # Internal packages
     ├── app/                   # Application orchestration
-    │   └── app.go            # Main application logic
+    │   ├── app.go            # Main application logic
+    │   └── app_test.go       # Unit tests for application logic
     ├── config/               # Configuration management
-    │   └── config.go         # Configuration loading and validation
+    │   ├── config.go         # Configuration loading and validation
+    │   └── config_test.go    # Unit tests for configuration
     ├── logger/               # Logging setup
-    │   └── logger.go         # Structured logging configuration
+    │   ├── logger.go         # Structured logging configuration
+    │   └── logger_test.go    # Unit tests for logging
     ├── network/              # Network communication
-    │   └── client.go         # TCP client for server communication
+    │   ├── client.go         # TCP client for server communication
+    │   └── client_test.go    # Unit tests for network client
     └── terminal/             # Terminal environment handling
         ├── terminal.go       # Terminal detection and formatting
         └── terminal_test.go  # Unit tests for terminal package
@@ -86,10 +93,41 @@ motd-client/
 ### Architecture Benefits
 
 - **Separation of Concerns**: Each package has a single responsibility
-- **Testability**: Components can be tested in isolation
+- **Testability**: Components can be tested in isolation with comprehensive unit tests
 - **Maintainability**: Clear boundaries between different functionalities
 - **Reusability**: Packages can be reused in other contexts
 - **Dependency Injection**: Dependencies are explicitly passed rather than using globals
+- **Interface-based Design**: Uses interfaces for better testability and flexibility
+
+## Testing
+
+The project includes comprehensive unit tests for all packages:
+
+```bash
+# Run all tests
+go test ./...
+
+# Run tests for a specific package
+go test ./internal/terminal/...
+go test ./internal/network/...
+go test ./internal/config/...
+go test ./internal/logger/...
+go test ./internal/app/...
+
+# Run tests with verbose output
+go test -v ./...
+
+# Run tests with coverage
+go test -cover ./...
+```
+
+### Test Coverage
+
+- **Terminal Package**: Tests terminal environment detection and message formatting
+- **Network Package**: Tests TCP client functionality with mock servers
+- **Config Package**: Tests configuration loading and validation
+- **Logger Package**: Tests logging setup and configuration
+- **App Package**: Tests application orchestration with mocked dependencies
 
 ## Dependencies
 

@@ -13,8 +13,8 @@ import (
 // App represents the main application.
 type App struct {
 	cfg       *config.Config
-	client    *network.Client
-	detector  *terminal.Detector
+	client    network.ClientInterface
+	detector  terminal.DetectorInterface
 	formatter *terminal.Formatter
 }
 

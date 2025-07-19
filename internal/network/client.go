@@ -10,6 +10,12 @@ import (
 	"time"
 )
 
+// ClientInterface defines the interface for network communication
+type ClientInterface interface {
+	Connect() (net.Conn, error)
+	FetchMessage(conn net.Conn) (string, error)
+}
+
 // Client handles communication with the MOTD server.
 type Client struct {
 	host    string
