@@ -101,7 +101,29 @@ motd-client/
 
 ## Testing
 
-The project includes comprehensive unit tests for all packages:
+The project includes comprehensive unit tests for all packages and automated CI/CD workflows:
+
+### GitHub Workflows
+
+The project uses GitHub Actions for continuous integration and deployment:
+
+- **Test Workflow** (`.github/workflows/test.yml`): Runs on every PR and push to main
+  - Tests against Go 1.24 and 1.25
+  - Runs tests with race detection and coverage reporting
+  - Uploads coverage to Codecov
+  - Displays test coverage summary
+
+- **Release Workflow** (`.github/workflows/release.yml`): Creates releases when tags are pushed
+  - Builds binaries for multiple platforms (Linux, macOS, Windows)
+  - Creates GitHub releases with attached binaries
+  - Generates release notes automatically
+
+- **Auto Release Workflow** (`.github/workflows/auto-release.yml`): Automatically creates releases on main branch merges
+  - Increments patch version automatically
+  - Creates and pushes new tags
+  - Builds and releases binaries for all platforms
+
+### Local Testing
 
 ```bash
 # Run all tests
