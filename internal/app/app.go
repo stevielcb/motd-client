@@ -68,7 +68,7 @@ func (a *App) displayMessage(message string) {
 	}
 
 	formattedMessage := a.formatter.Format(message)
-	fmt.Print(formattedMessage)
+	fmt.Println(formattedMessage)
 
 	slog.Debug("Message displayed successfully", "message_length", len(message))
 }
